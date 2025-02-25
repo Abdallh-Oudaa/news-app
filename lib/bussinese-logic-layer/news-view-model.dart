@@ -1,20 +1,14 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
 import 'package:news_app/bussinese-logic-layer/RepositoryContract/news-repository.dart';
-import 'package:news_app/data-layer/Repository/DataSourceContract/news-data-source.dart';
-import 'package:news_app/data-layer/Repository/DataSourceImpl/news-data-source-impl.dart';
-import 'package:news_app/data-layer/Repository/RepositoryIpml/news-repository-impl.dart';
-import 'package:news_app/data-layer/api/api-manger.dart';
-import 'package:news_app/data-layer/model/NewsResponse.dart';
 
+import 'package:news_app/data-layer/model/NewsResponse.dart';
+@injectable
 class NewsViewModel extends Cubit<NewsViewModelState>{
   late NewsRepository newsRepository;
-  late NewsDataSource newsDataSource;
-  late ApiManger apiManger;
-  NewsViewModel():super(LoadingState()){
-    apiManger=ApiManger();
-    newsDataSource=NewsDataSourceImpl(apiManger: apiManger);
-    newsRepository=NewsRepositoryImpl(newsDataSource: newsDataSource);
-  }
+
+
+  NewsViewModel({required this.newsRepository}):super(LoadingState());
   void getNewsBySourceId(String sourceId)async{
     var response=await newsRepository.getNews(sourceId);
     try{

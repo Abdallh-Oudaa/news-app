@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:news_app/Di/di.dart';
 import 'package:news_app/bussinese-logic-layer/news-view-model.dart';
 
 import 'package:news_app/data-layer/model/Source.dart';
@@ -18,7 +19,7 @@ class NewsContainer extends StatefulWidget {
 }
 
 class _NewsContainerState extends State<NewsContainer> {
-  final NewsViewModel viewModel = NewsViewModel();
+  final NewsViewModel viewModel =getIt.get<NewsViewModel>();
   @override
   void initState() {
     viewModel.getNewsBySourceId(widget.source.id!);

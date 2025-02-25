@@ -1,10 +1,11 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:injectable/injectable.dart';
 import 'package:news_app/data-layer/api/api-cnostants.dart';
 import 'package:news_app/data-layer/model/NewsResponse.dart';
 import 'package:news_app/data-layer/model/SourceResponse.dart';
-
+@singleton
 class ApiManger {
   Future<SourceResponse> getSources(String categoryId) async {
     try{

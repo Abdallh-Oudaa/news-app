@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
+import 'package:news_app/Di/di.dart';
 import 'package:news_app/bussinese-logic-layer/sources-view-model.dart';
 
 import 'package:news_app/data-layer/model/categories.dart';
@@ -17,7 +19,7 @@ class CategoryDetailes extends StatefulWidget {
 }
 
 class _CategoryDetailesState extends State<CategoryDetailes> {
-  SourcesViewModel viewModel = SourcesViewModel();
+  SourcesViewModel viewModel = getIt.get<SourcesViewModel>();
 
   @override
   @override
@@ -27,6 +29,7 @@ class _CategoryDetailesState extends State<CategoryDetailes> {
     super.initState();
   }
 
+  @override
   Widget build(BuildContext context) {
     return BlocBuilder<SourcesViewModel, SourcesViewModelState>(
       bloc: viewModel,
