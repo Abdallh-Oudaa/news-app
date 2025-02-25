@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/core/my-theme.dart';
 import 'package:news_app/data-layer/model/categories.dart';
-import 'package:news_app/persentation-layer/screens/category-detailes.dart';
+
 
 import 'package:news_app/persentation-layer/screens/category-screen.dart';
-import 'package:news_app/persentation-layer/screens/settings-widget.dart';
-import 'package:news_app/persentation-layer/screens/sources-list-widget.dart';
+import 'package:news_app/persentation-layer/screens/settings-screen.dart';
+import 'package:news_app/persentation-layer/screens/categroy-detailes.dart';
 
 
 import '../widgets/home-drawer.dart';
@@ -78,7 +78,7 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
   void clickOnCategory(Categories category){
-    selectedWidget=SourcesListWidget(category: category,);
+    selectedWidget=CategoryDetailes(category: category,);
     setState(() {
 
     });

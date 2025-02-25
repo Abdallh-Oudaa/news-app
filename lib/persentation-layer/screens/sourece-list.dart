@@ -4,25 +4,25 @@ import 'package:news_app/data-layer/model/categories.dart';
 import 'package:news_app/persentation-layer/widgets/news-container.dart';
 import 'package:news_app/persentation-layer/widgets/tap-item.dart';
 
-class CategoryDetails extends StatefulWidget {
+class SourcesListWidget extends StatefulWidget {
   final List<Source> sources;
 
 
 
 
-   CategoryDetails({required this.sources, super.key,});
+  SourcesListWidget({required this.sources, super.key,});
 
   @override
-  State<CategoryDetails> createState() => _TapNewsScreenState();
+  State<SourcesListWidget> createState() => _TapNewsScreenState();
 }
 
-class _TapNewsScreenState extends State<CategoryDetails> {
+class _TapNewsScreenState extends State<SourcesListWidget> {
   int? selectedIndex=0;
 
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-        length: widget.sources!.length,
+        length: widget.sources.length,
         child: Column(
           children: [
             TabBar(
@@ -36,12 +36,12 @@ class _TapNewsScreenState extends State<CategoryDetails> {
                 });
               },
               tabs: widget.sources
-                  !.map((source) => TapItem(
-                      isSelected: selectedIndex == widget.sources?.indexOf(source),
+                  .map((source) => TapItem(
+                      isSelected: selectedIndex == widget.sources.indexOf(source),
                       source: source))
                   .toList(),
             ),
-            Expanded(child: NewsContainer(source: widget.sources![selectedIndex!], ))
+            Expanded(child: NewsContainer(source: widget.sources[selectedIndex!], ))
           ],
         ));
   }
