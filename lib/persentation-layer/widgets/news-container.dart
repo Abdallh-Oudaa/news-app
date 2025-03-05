@@ -1,36 +1,98 @@
 import 'package:flutter/material.dart';
-import 'package:news_app/data-layer/api/api-manger.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:news_app/Di/di.dart';
+import 'package:news_app/bussinese-logic-layer/news-view-model.dart';
+
 import 'package:news_app/data-layer/model/Source.dart';
-import 'package:news_app/persentation-layer/widgets/news-item.dart';
+
 
 import '../../core/my-theme.dart';
+import 'news-item.dart';
 
-class NewsContainer extends StatelessWidget {
+class NewsContainer extends StatefulWidget {
   final Source source;
-  const NewsContainer({required this.source, super.key});
+
+  NewsContainer({required this.source, super.key});
+
+  @override
+  State<NewsContainer> createState() => _NewsContainerState();
+}
+
+class _NewsContainerState extends State<NewsContainer> {
+  final NewsViewModel viewModel =getIt.get<NewsViewModel>();
+  @override
+  void initState() {
+    viewModel.getNewsBySourceId(widget.source.id!);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: ApiManger.getNewsBySourceId(source.id ?? ""),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
+    return BlocBuilder<NewsViewModel,NewsViewModelState>(
+      bloc:viewModel ,
+      builder: (context, state) {
+        switch(state){
+          case LoadingState():{
+            return const  Center(child: CircularProgressIndicator(),);
+          }
+          case ErrorState():{
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    state.message!,
+                    style:const TextStyle(color: MyTheme.primaryColor),
+                  ),
+                  MaterialButton(
+                      color: MyTheme.primaryColor,
+                      onPressed: () {
+                     initState();
+                      },
+                      child: const Text(
+                        "try again",
+                        style: TextStyle(color: Colors.white),
+                      ))
+                ],
+              ),
+            );
+          }
+          case SuccessState():{
+            return ListView.builder(
+              itemBuilder: (context, index) => NewsItem(
+                news: state.news![index],
+                source: widget.source,
+              ),
+              itemCount: state.news?.length,
+            );
+          }
+        }
+
+    },);
+  }
+}
+/*ChangeNotifierProvider(
+      create: (context) => widget.viewModel,
+      child: Consumer<NewsViewModel>(builder: (context, newsViewModel, child) {
+        if (newsViewModel.news == null) {
           return const Center(
             child: CircularProgressIndicator(),
           );
         }
-        if (snapshot.hasError) {
+        if (newsViewModel.message != null) {
           return Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text(
-                  "something went wrong",
-                  style: TextStyle(color: MyTheme.primaryColor),
+                 Text(
+                  newsViewModel.message!,
+                  style:const TextStyle(color: MyTheme.primaryColor),
                 ),
                 MaterialButton(
                     color: MyTheme.primaryColor,
-                    onPressed: () {},
+                    onPressed: () {
+                      newsViewModel.getNews(widget.source.id!);
+                    },
                     child: const Text(
                       "try again",
                       style: TextStyle(color: Colors.white),
@@ -39,31 +101,12 @@ class NewsContainer extends StatelessWidget {
             ),
           );
         }
-        if (snapshot.data?.status == "error") {
-          return Center(
-            child: Column(
-              children: [
-                Text(
-                  snapshot.data?.message ?? "",
-                  style: const TextStyle(color: MyTheme.primaryColor),
-                ),
-                MaterialButton(
-                    color: MyTheme.primaryColor,
-                    onPressed: () {},
-                    child: const Text(
-                      "try again",
-                      style: TextStyle(color: Colors.white),
-                    ))
-              ],
-            ),
-          );
-        }
-        var news = snapshot.data!.articles;
         return ListView.builder(
-          itemBuilder: (context, index) => NewsItem(news: news![index],source: source,),
-          itemCount: news?.length,
+          itemBuilder: (context, index) => NewsItem(
+            news: newsViewModel.news![index],
+            source: widget.source,
+          ),
+          itemCount: newsViewModel.news?.length,
         );
-      },
-    );
-  }
-}
+      }),
+    );*/

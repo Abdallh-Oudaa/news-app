@@ -1,12 +1,13 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:injectable/injectable.dart';
 import 'package:news_app/data-layer/api/api-cnostants.dart';
 import 'package:news_app/data-layer/model/NewsResponse.dart';
 import 'package:news_app/data-layer/model/SourceResponse.dart';
-
+@singleton
 class ApiManger {
- static Future<SourceResponse> getSources(String categoryId) async {
+  Future<SourceResponse> getSources(String categoryId) async {
     try{
       Uri url = Uri.https(ApiConstants.baseUrl, ApiConstants.sourceEndPoint,
           {"apiKey": "1228483714c04aeebb823241867f66c7",
@@ -21,7 +22,7 @@ class ApiManger {
 
     }
   }
-  static Future<NewsResponse> getNewsBySourceId(String sourceId)async{
+   Future<NewsResponse> getNewsBySourceId(String sourceId)async{
     try{
       Uri url = Uri.https(ApiConstants.baseUrl, ApiConstants.newsEndPoint,
           {"apiKey": "1228483714c04aeebb823241867f66c7",

@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:news_app/core/my-theme.dart';
 
 import 'package:news_app/persentation-layer/screens/home-screen.dart';
+
+import 'Di/di.dart';
 class MyHttpOverrides extends HttpOverrides{
   @override
   HttpClient createHttpClient(SecurityContext? context){
@@ -12,6 +14,7 @@ class MyHttpOverrides extends HttpOverrides{
   }
 }
 void main() {
+  configureDependencies();
   HttpOverrides.global =  MyHttpOverrides();
   runApp(const MyApp());
 }
