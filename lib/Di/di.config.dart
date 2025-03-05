@@ -18,18 +18,12 @@ import '../bussinese-logic-layer/RepositoryContract/sources-repository.dart'
     as _i1044;
 import '../bussinese-logic-layer/sources-view-model.dart' as _i935;
 import '../data-layer/api/api-manger.dart' as _i989;
-import '../data-layer/Repository/DataSourceContract/news-data-source.dart'
-    as _i550;
-import '../data-layer/Repository/DataSourceContract/sources-data-source.dart'
-    as _i667;
-import '../data-layer/Repository/DataSourceImpl/news-data-source-impl.dart'
-    as _i600;
-import '../data-layer/Repository/DataSourceImpl/sources-data-source-impl.dart'
-    as _i127;
-import '../data-layer/Repository/RepositoryIpml/news-repository-impl.dart'
-    as _i770;
-import '../data-layer/Repository/RepositoryIpml/sources-repository-impl.dart'
-    as _i327;
+import '../data-layer/DataSourceContract/news-data-source.dart' as _i41;
+import '../data-layer/DataSourceContract/sources-data-source.dart' as _i1011;
+import '../data-layer/DataSourceImpl/news-data-source-impl.dart' as _i912;
+import '../data-layer/DataSourceImpl/sources-data-source-impl.dart' as _i560;
+import '../data-layer/Repository/news-repository-impl.dart' as _i427;
+import '../data-layer/Repository/sources-repository-impl.dart' as _i951;
 
 extension GetItInjectableX on _i174.GetIt {
 // initializes the registration of main-scope dependencies inside of GetIt
@@ -43,16 +37,16 @@ extension GetItInjectableX on _i174.GetIt {
       environmentFilter,
     );
     gh.singleton<_i989.ApiManger>(() => _i989.ApiManger());
-    gh.factory<_i550.NewsDataSource>(
-        () => _i600.NewsDataSourceImpl(apiManger: gh<_i989.ApiManger>()));
-    gh.factory<_i667.SourcesDataSource>(
-        () => _i127.SourcesDataSourceImpl(apiManger: gh<_i989.ApiManger>()));
+    gh.factory<_i41.NewsDataSource>(
+        () => _i912.NewsDataSourceImpl(apiManger: gh<_i989.ApiManger>()));
+    gh.factory<_i1011.SourcesDataSource>(
+        () => _i560.SourcesDataSourceImpl(apiManger: gh<_i989.ApiManger>()));
     gh.factory<_i750.NewsRepository>(() =>
-        _i770.NewsRepositoryImpl(newsDataSource: gh<_i550.NewsDataSource>()));
+        _i427.NewsRepositoryImpl(newsDataSource: gh<_i41.NewsDataSource>()));
+    gh.factory<_i1044.SourcesRepository>(() =>
+        _i951.SourcesRepositoryImpl(sources: gh<_i1011.SourcesDataSource>()));
     gh.factory<_i30.NewsViewModel>(
         () => _i30.NewsViewModel(newsRepository: gh<_i750.NewsRepository>()));
-    gh.factory<_i1044.SourcesRepository>(() =>
-        _i327.SourcesRepositoryImpl(sources: gh<_i667.SourcesDataSource>()));
     gh.factory<_i935.SourcesViewModel>(() => _i935.SourcesViewModel(
         sourcesRepository: gh<_i1044.SourcesRepository>()));
     return this;
