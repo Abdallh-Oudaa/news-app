@@ -1,16 +1,1 @@
-# news_app
-
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+this news app to get more different news like sport news,science news,technology news and  i make tow api calls first one to get sources of news the second to get those news based on sources id I didn’t using completely clean architecture but i used MVVM pattern and Repository pattern
