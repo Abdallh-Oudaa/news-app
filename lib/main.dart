@@ -1,11 +1,13 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:news_app/core/Di/di.dart';
 import 'package:news_app/core/my-theme.dart';
+import 'package:news_app/persentation/screens/home-screen.dart';
 
-import 'package:news_app/persentation-layer/screens/home-screen.dart';
 
-import 'Di/di.dart';
+
+
 class MyHttpOverrides extends HttpOverrides{
   @override
   HttpClient createHttpClient(SecurityContext? context){
@@ -29,7 +31,7 @@ class MyApp extends StatelessWidget {
       theme: MyTheme.lightTheme,
       initialRoute: HomeScreen.routName,
       routes: {
-        HomeScreen.routName: (context) =>  HomeScreen(),
+        HomeScreen.routName: (context) =>  const HomeScreen(),
 
       },
     );
